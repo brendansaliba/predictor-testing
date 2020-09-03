@@ -162,7 +162,7 @@ def predict(ticker, df):
     return prediction
 
 
-## UNCOMMENT AND RUN THIS CODE IF IT'S YOUR FIRST TIME
+## UNCOMMENT AND RUN THIS CODE IF
 # main = get_data_from_yahoo_and_compile_into_one_df()
 #
 # with open("main.pickle", "wb") as f:

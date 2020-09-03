@@ -82,13 +82,11 @@ hist = myacc.history
 
 # plot stock over the period traded and account value
 fig, (a1, a2) = plt.subplots(2, 1)
+fig.suptitle("Trading {}".format(ticker))
 a1.plot(main[ticker][starting_point:])
 a1.set_title("Stock Price")
-a1.ylabel("Dollars")
 
 a2.plot(acc_value_hist, 'tab:green')
 a2.set_title("Account Value")
-a2.xlabel("Days Elapsed")
-a2.ylabel("Dollars")
 
 plt.show()
