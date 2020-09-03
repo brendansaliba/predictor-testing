@@ -49,7 +49,7 @@ class Account:
     def get_history(self):
         print("History: ", "\n", self.history)
 
-    def buy_stock(self, ticker, share_price):
+    def buy_stock(self, ticker, share_price, date):
         if ticker not in self.positions:
             try:
                 num_shares = math.floor(self.balance / share_price)
@@ -60,8 +60,7 @@ class Account:
                 self.check_account()
                 print("The share price is {}".format(share_price))
 
-            date = dt.datetime.now()
-            action = "Bought {} at {} ({} shares) on {}".format(ticker, share_price, num_shares, date)
+            action = "Bought {} at {} ({} shares on {})".format(ticker, share_price, num_shares, date)
 
             self.balance = self.balance - (share_price * num_shares)
             self.history.append(action)
@@ -70,13 +69,12 @@ class Account:
         else:
             print("Already have shares of {}".format(ticker))
 
-    def sell_stock(self, ticker, share_price):
+    def sell_stock(self, ticker, share_price, date):
         # check to see if you hold the stock, if so, continue
         if ticker in self.positions:
             # if you do hold the stock, calculate your profit/loss then sell it
             price_change = share_price - self.positions[ticker]['purchase price']
             position_net_change = price_change * self.positions[ticker]['shares']
-            date = dt.datetime.now()
             action = "Sold {} at {} ({} shares on {})".format(ticker, share_price, self.positions[ticker]['shares'],
                                                               date)
             print(action)
@@ -138,7 +136,7 @@ def get_data_from_yahoo_and_compile_into_one_df():
 # extracts feature from data and makes a prediction
 def predict(ticker, df):
     # get the classifier for the ticker in question
-    with open("SP500 Correlation Classifiers/{}.pickle".format(ticker), "rb") as c:
+    with open("classifiers/{}.pickle".format(ticker), "rb") as c:
         clf = pickle.load(c)
     c.close()
 
@@ -163,8 +161,10 @@ def predict(ticker, df):
 
     return prediction
 
-main = get_data_from_yahoo_and_compile_into_one_df()
 
-with open("main.pickle", "wb") as f:
-    pickle.dump(main, f)
-f.close()
+## UNCOMMENT AND RUN THIS CODE IF IT'S YOUR FIRST TIME
+# main = get_data_from_yahoo_and_compile_into_one_df()
+#
+# with open("main.pickle", "wb") as f:
+#     pickle.dump(main, f)
+# f.close()
